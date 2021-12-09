@@ -2,7 +2,7 @@ import React from "react";
 
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
-
+import { Fragment } from 'react'
 
 import "index.scss";
 
@@ -179,6 +179,12 @@ storiesOf("Button", module)
     message={"Could not delete appointment."}
     onClose={action("onClose")}
     />)
+    .add("Create", () =>
+    <Form
+    interviewers={interviewers}
+    onSave={action("onSave")}
+    onCancel={action("onCancel")}
+    />)
     .add("Edit", () => 
     <Form 
     student={"Sagal Ghelle"}
@@ -187,9 +193,9 @@ storiesOf("Button", module)
     onSave={action("onSave")}
     onCancel={action("onCancel")}
     />)
-    .add("Create", () =>
-    <Form
-    interviewers={interviewers}
-    onSave={action("onSave")}
-    onCancel={action("onCancel")}
-    />)
+    .add("Appointment Empty", () => (
+      <Fragment>
+        <Appointment id={1} time="4pm" />
+        <Appointment time="5pm" />
+      </Fragment>
+    ))

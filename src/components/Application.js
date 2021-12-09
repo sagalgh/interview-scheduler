@@ -4,6 +4,8 @@ import "components/Application.scss";
 import { useState } from "react";
 import DayList from "components/DayList";
 import Button from "components/Button";
+
+
 const days = [
   {
     id: 1,

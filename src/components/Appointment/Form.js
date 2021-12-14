@@ -12,7 +12,6 @@ const Form = (props) => {
     setStudent("");
     setInterviewer(null);
   }
-
   return (
     <main className="appointment__card appointment__card--create">
   <section className="appointment__card-left">
@@ -46,7 +45,7 @@ const Form = (props) => {
         reset()
       } 
         }>Cancel</Button>
-      <Button confirm onClick={()=>props.onSave(interviewer,student)}>Save</Button>
+      <Button confirm onClick={()=>props.onSave(student,interviewer)}>Save</Button>
     </section>
   </section>
 </main>

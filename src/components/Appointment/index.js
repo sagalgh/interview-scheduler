@@ -4,6 +4,7 @@ import Header from "components/Appointment/Header";
 import Show from "components/Appointment/Show";
 import Empty from "components/Appointment/Empty";
 import Form from "components/Appointment/Form";
+import Error from "components/Appointment/Error";
 import Confirm from "./Confirm";
 import Status from "./Status";
 import useVisualMode from "helpers/hooks/useVisualMode";
@@ -16,6 +17,9 @@ const Appointment = (props) => {
   const DELETING = "DELETING";
   const CONFIRM = "CONFIRMING";
   const EDIT= "EDIT";
+  const ERROR_SAVE = "ERROR_SAVE";
+  const ERROR_DELETE  = "ERROR_DELETE";
+
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
@@ -26,17 +30,17 @@ const Appointment = (props) => {
       interviewer
     };
     
-    props.bookInterview(props.id, interview)
+    props
+    .bookInterview(props.id, interview)
     .then(() => transition(SHOW))
+    .catch(error => transition(ERROR_SAVE, true));
   }
-  function remove(name, interviewer){
-    transition(DELETING);
-    const interview = {
-      student: name,
-      interviewer
-    };
-    props.cancelInterview(props.id,interview)
+  function remove(event){
+    transition(DELETING,true);
+    props
+    .cancelInterview(props.id)
     .then(() => transition(EMPTY))
+    .catch(error => transition(ERROR_DELETE, true));
   }
  function edit(name, interview){
     transition(EDIT)
@@ -47,9 +51,16 @@ const Appointment = (props) => {
 
       {mode === DELETING &&
       <Status message={"Deleting"} />}
+
+      {mode === ERROR_SAVE &&
+      <Error onClose={()=>back()} message={"save"} />}
+
+
+      {mode === ERROR_DELETE &&
+      <Error onClose={()=>back()} message={"delete"} />}
     
      {mode === CONFIRM &&
-      <Confirm message ={"Are you sure you would like to delete?"} onCancel= {()=> back()} onConfirm={remove}/>}
+      <Confirm onConfirm={remove} message ={"Are you sure you would like to delete?"} onCancel= {()=> back()} onConfirm={remove}/>}
 
       {mode === SAVING &&
       <Status />}

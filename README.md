@@ -1,4 +1,5 @@
 # Interview Scheduler
+A React application that allows users to book and cancel interviews. Testing with Jest & Cypress
 
 ## Setup
 
